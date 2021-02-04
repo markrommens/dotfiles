@@ -1,0 +1,78 @@
+#!/bin/sh
+
+#  _                                          
+# | |__  ___ _ ____      ___ __ ___  _ __ ___ 
+# | '_ \/ __| '_ \ \ /\ / / '_ ` _ \| '__/ __|
+# | |_) \__ \ |_) \ V  V /| | | | | | | | (__ 
+# |_.__/|___/ .__/ \_/\_/ |_| |_| |_|_|  \___|
+#           |_|                               
+
+###################
+## Configuration ##
+###################
+
+## Workspace name
+#bspc monitor -d 1 2 3 4 5 6 7 8 9  
+bspc monitor -d term dev www doc gfx media etc
+
+## Common bspwm configuration
+bspc config border_width         2
+bspc config window_gap           8
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+# Insertion scheme
+#bspc rule -a \* node=focused split_dir=east
+bspc config automatic_scheme	longest_side
+#bspc config focus_follows_pointer true
+
+##################
+## Window rules ##
+##################
+
+bspc rule -a Spotify desktop='^6' state=tiled follow=on
+#bspc rule -a firefox:Navigator desktop='^2' state=tiled focused=off
+#bspc rule -a firefox:SessionManager desktop='^2' state=floating layer=above
+#bspc rule -a Toplevel:Firefox state=floating
+#bspc rule -a firefox:Dialog state=floating
+bspc rule -a Firefox-esr desktop='^3' focus=on
+bspc rule -a Chromium desktop='^3' state=tiled follow=on
+bspc rule -a teamviewer desktop='^7' state=tiled follow=on
+bspc rule -a gpicview desktop='^5' state=floating
+
+## Workspace 3 (File management)
+bspc rule -a Pcmanfm desktop='^1' follow=on focus=on
+
+## Workspace 6 (Image manipulation)
+bspc rule -a Gimp desktop='^5' state=floating follow=on
+
+## Workspace 7 (Documents and office)
+bspc rule -a Evince desktop='^4' follow=on focus=on
+
+## Workspace 8 (System-settings)
+bspc rule -a Lxappearance desktop='^7' state=floating follow=on
+bspc rule -a Lightdm-gtk-greeter-settings desktop='^7' state=floating follow=on
+
+
+
+
+###############
+## Autostart ##
+###############
+
+# Keybind daemon
+pkill sxhkd
+sxhkd &
+
+# Reload compton
+#pkill compton
+compton --config ~/.config/compton.conf &
+
+# Launch polybar
+$HOME/.config/polybar/launch.sh
+
+
+bspc subscribe node_add node_remove \
+        | grep -o --line-buffered '0x[0-9A-F]\+$' | xargs -n1 pidswallow &

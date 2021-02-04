@@ -1,0 +1,4 @@
+.include /etc/pulse/default.pa
+
+# Set volume to 30% on boot
+set-sink-volume 0 19660
