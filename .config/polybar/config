@@ -1,0 +1,353 @@
+; ____       _       _                
+;|  _ \ ___ | |_   _| |__   __ _ _ __ 
+;| |_) / _ \| | | | | '_ \ / _` | '__|
+;|  __/ (_) | | |_| | |_) | (_| | |   
+;|_|   \___/|_|\__, |_.__/ \__,_|_|   
+;              |___/                  
+
+;------------------------------------------------------------------------------
+;                                  C O L O R S
+;------------------------------------------------------------------------------
+
+[colors]
+
+; Background ARGB color (e.g. #aa2F343F)
+; The aa stands for the amount of transparency
+; FF is full opaque or not transparent
+; 00 is fully transparent or no coloring at all
+
+background     = #292d3e
+background-alt = #4f545f
+foreground     = #c0c5ce
+foreground-alt = #787e68
+accent         = #81a1c1
+alert          = #bd2c40
+
+[settings]
+throttle-ms = 50
+throttle-limit = 5
+
+###############################################################################
+
+[bar/top]
+
+monitor          = LVDS-1
+width            = 100%
+height           = 20
+fixed-center     = true
+background       = ${colors.background}
+foreground       = ${colors.foreground}
+tray-transparent = false
+
+spacing = 0
+lineheight = 2
+padding-left = 2
+padding-right = 2
+module-margin-left = 1
+module-margin-right = 1
+
+line-size = 2
+line-color = #f00
+;font-0 = lucy tewi:pixelsize=9:antialias=0;2
+font-0 = "Terminus:pixelsize=12:antialias=0;2"
+font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
+font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
+font-3 = "Font Awesome 5 Brands:pixelsize=8;1"
+font-4 = "Unifont:pixelsize=9;1"
+font-5 = "Siji:size=9;3"
+;font-4 = "Wuncon Siji:size=9;3"
+wm-restack = bspwm
+modules-left = bspwm
+modules-center = xwindow
+;modules-right = wlan volume battery cpu memory clock
+modules-right = alsa cpu temperature memory battery wireless-network date 
+
+###############################################################################
+
+
+[module/bspwm]
+
+type = internal/bspwm
+format = <label-state> <label-mode>
+
+;ws-icon-0 = 1;
+;ws-icon-1 = 2;
+;ws-icon-2 = 3;
+;ws-icon-3 = 4;
+;ws-icon-4 = 5;
+;ws-icon-5 = 6;
+;ws-icon-6 = 7;
+;ws-icon-7 = 8;
+;ws-icon-8 = 9;9
+;ws-icon-default = 1
+
+;label-active = %name%
+;label-active-foreground = #ffffff
+;label-active-background = #3f3f3f
+;label-active-background = #F38F30
+
+label-focused = %name%
+label-focused-background = ${colors.background-alt}
+label-focused-padding = 1
+label-focused-foreground = ${colors.foreground}
+
+;label-focused = %icon%
+;label-focused-background = ${colors.background}
+;label-focused-underline= #6790eb
+;label-focused-padding = 1
+;label-focused-foreground = ${colors.foreground}
+;label-dimmed-focused = %icon%
+;label-dimmed-underline = #fba922
+;label-dimmed-padding = 1
+
+label-occupied = %name%
+label-occupied-foreground = ${colors.foreground}
+label-occupied-padding = 1
+
+;label-urgent = %icon%
+;label-urgent-background = ${colors.alert}
+;label-urgent-padding = 1
+;
+label-empty = %name%
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 1
+;
+label-monocle = [M]
+label-monocle-padding = 1
+
+;format-foreground = ${colors.foreground}
+;format-background = ${colors.background}
+
+;label-locked = 
+;label-locked-foreground = #bd2c40
+;label-locked-underline = ${module/bspwm.label-monocle-underline}
+;label-locked-padding = ${module/bspwm.label-monocle-padding}
+;label-sticky = 
+;label-sticky-foreground = #fba922
+;label-sticky-underline = ${module/bspwm.label-monocle-underline}
+;label-sticky-padding = ${module/bspwm.label-monocle-padding}
+;label-private = 
+;label-private-foreground = #bd2c40
+;label-private-underline = ${module/bspwm.label-monocle-underline}
+;label-private-padding = ${module/bspwm.label-monocle-padding}
+
+;label-separator = |
+;label-separator-foreground = #ffb52a
+
+
+[module/alsa]
+
+type = internal/alsa
+
+format-volume = <label-volume> 
+format-volume-prefix = " "
+label-volume = %percentage%%
+label-volume-foreground = ${root.foreground}
+
+format-muted-prefix = " "
+format-muted-foreground = ${colors.foreground-alt}
+label-muted = sound muted
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+
+format = <label> <ramp-coreload>
+;
+;label = 
+;label-font = 1
+;
+;ramp-coreload-0 = ▁
+;ramp-coreload-0-font = 5
+;ramp-coreload-1 = ▂
+;ramp-coreload-1-font = 5
+;ramp-coreload-2 = ▃
+;ramp-coreload-2-font = 5
+;ramp-coreload-3 = ▄
+;ramp-coreload-3-font = 5
+;ramp-coreload-4 = ▅
+;ramp-coreload-4-font = 5
+;ramp-coreload-5 = ▆
+;ramp-coreload-5-font = 5
+;ramp-coreload-6 = ▇
+;ramp-coreload-6-font = 5
+;ramp-coreload-7 = █
+;ramp-coreload-7-font = 5
+
+format-foreground = ${xrdb:color5}
+label-font = 1
+label = ""
+ramp-coreload-0 = ▁
+ramp-coreload-0-font = 2
+ramp-coreload-0-foreground = #aaff77
+ramp-coreload-1 = ▂
+ramp-coreload-1-font = 2	
+ramp-coreload-1-foreground = #aaff77
+ramp-coreload-2 = ▃
+ramp-coreload-2-font = 2
+ramp-coreload-2-foreground = #aaff77
+ramp-coreload-3 = ▄
+ramp-coreload-3-font = 2
+ramp-coreload-3-foreground = #aaff77
+ramp-coreload-4 = ▅
+ramp-coreload-4-font = 2
+ramp-coreload-4-foreground = #fba922
+ramp-coreload-5 = ▆
+ramp-coreload-5-font = 2
+ramp-coreload-5-foreground = #fba922
+ramp-coreload-6 = ▇
+ramp-coreload-6-font = 2
+ramp-coreload-6-foreground = #ff5555
+ramp-coreload-7 = █
+ramp-coreload-7-font = 2
+ramp-coreload-7-foreground = #ff5555
+
+###############################################################################
+
+[module/memory]
+type = internal/memory
+interval = 1
+label = %percentage_used%%
+
+;format = <label>
+format-prefix = " "
+;format-underline = #4bffdc
+
+
+;;format-prefix-foreground = #fefefe
+;;format-foreground = #fefefe
+;;format-background = #7197E7
+
+;;format = <label> <bar-used>
+
+;;label = memory
+;;label-font = 3
+
+;;bar-used-width = 20
+;;bar-used-indicator = |
+;;bar-used-indicator-font = 4
+;;bar-used-fill = ─
+;;bar-used-fill-font = 4
+;;bar-used-empty = ─
+;;bar-used-empty-font = 4
+;;bar-used-empty-foreground = #99ffffff
+
+###############################################################################
+
+[module/temperature]
+type = internal/temperature
+
+interval = 10
+
+thermal-zone = 0
+
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input
+format-foreground = ${xrdb:color1}
+label =  %temperature-c%
+
+
+[module/wireless-network]
+;https://github.com/jaagr/polybar/wiki/Module:-network
+type = internal/network
+;interface = ${env:WIRELESS}
+interface = wlp7s0
+interval = 3.0
+label-connected = %essid%
+
+format-connected = <label-connected>
+;format-connected = <ramp-signal> <label-connected>
+format-connected-foreground = ${xrdb:color10}
+;format-connected-background = ${colors.background}
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${xrdb:color10}
+;format-connected-prefix-background = ${colors.background}
+
+
+[module/date]
+type = internal/date
+;label-font = 0
+;format-prefix-foreground = ${colors.foreground-alt}
+;format-prefix-foreground = ${colors.foreground-alt}
+;format-prefix = ""
+format-foreground = ${xrdb:color13}
+interval = 5
+date = "%b %e"
+date-alt = "%e %m" 
+time = "%H:%M"
+;time = " %H:%M"
+;time-alt = %H:%M
+;format-prefix = ""
+label = "%date%, %time%"
+
+[module/volume]
+type = internal/volume
+speaker-mixer = Speaker
+headphone-mixer = Headphone
+headphone-id = 9
+
+label-volume = volume %percentage%%
+label-volume-font = 3
+label-muted = sound muted
+label-muted-font = 3
+label-muted-foreground = #99ffffff
+
+###############################################################################
+
+[module/battery]
+type = internal/battery
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT1
+adapter = ACAD
+
+full-at = 100
+poll-interval = 5
+
+format-prefix-foreground = ${xrdb:color3}
+;format-charging = <animation-charging> <label-charging>
+label-charging =  %percentage_raw%%
+;format-discharging = <ramp-capacity> <label-discharging>
+;label-discharging = %percentage%%
+
+label-full =  %percentage_raw%%
+;format-full-prefix = "Full "
+
+; Only applies if <ramp-capacity> is used
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 750
+
+###############################################################################
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:100:...%
+
+vim:ft=dosini
